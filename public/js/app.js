@@ -16526,9 +16526,9 @@ var Home = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.d = {
             // all your compnent data will be present in here
-            cart: [],
-            wish: [],
-            cmp: [],
+            default: [],
+            wishlist: [],
+            compare: [],
             activeInstance: "default",
             activeList: []
         };
@@ -16552,13 +16552,13 @@ var Home = /** @class */ (function (_super) {
                 return;
             }
             if (instance === "wishlist") {
-                _this.d.wish.push(res.data);
+                _this.d.wishlist.push(res.data);
             }
             else if (instance === "compare") {
-                _this.d.cmp.push(res.data);
+                _this.d.compare.push(res.data);
             }
             else {
-                _this.d.cart.push(res.data);
+                _this.d.default.push(res.data);
             }
             _this.successMes();
             loader.add("d-none");
@@ -16573,12 +16573,28 @@ var Home = /** @class */ (function (_super) {
                 return;
             }
             // alter item
-            _this.d.cart.map(function (x) {
+            _this.d.default.map(function (x) {
                 if (x.id === id) {
-                    x.qty =
-                        type === "sub" ? x.qty - 1 : x.qty + 1;
+                    x.qty = type === "sub" ? x.qty - 1 : x.qty + 1;
                 }
                 return x;
+            });
+            _this.successMes();
+            loader.add("d-none");
+        });
+    };
+    Home.prototype.destroy = function (id, instance) {
+        var _this = this;
+        var loader = this.showLoader("del" + id);
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete("cart/" + id, { data: { instance: instance } }).then(function (res) {
+            if (!res || res.status !== 204) {
+                _this.errorMes();
+                loader.add("d-none");
+                return;
+            }
+            _this.addClass("#" + instance + id, "d-none");
+            _this.d[instance] = _this.d[instance].filter(function (x) {
+                return x.id !== id;
             });
             _this.successMes();
             loader.add("d-none");
@@ -16588,22 +16604,22 @@ var Home = /** @class */ (function (_super) {
         var _this = this;
         // TODO show loader for all items
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/cart").then(function (res) {
-            _this.d.cart = res.data.all;
-            _this.d.wish = res.data.wish;
-            _this.d.cmp = res.data.cmp;
-            _this.d.activeList = res.data.all;
+            _this.d.default = res.data.all;
+            _this.d.wishlist = res.data.wish;
+            _this.d.compare = res.data.cmp;
+            _this.d.activeList = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(res.data.all);
         });
     };
     Home.prototype.changeInstance = function (instance) {
         this.d.activeInstance = instance;
-        if (instance === "wish") {
-            this.d.activeList = this.d.wish;
+        if (instance === "wishlist") {
+            this.d.activeList = this.d.wishlist;
         }
-        else if (instance === "cmp") {
-            this.d.activeList = this.d.cmp;
+        else if (instance === "compare") {
+            this.d.activeList = this.d.compare;
         }
         else {
-            this.d.activeList = this.d.cart;
+            this.d.activeList = this.d.default;
         }
     };
     Home.prototype.beforeMount = function () {
@@ -16611,7 +16627,8 @@ var Home = /** @class */ (function (_super) {
             "addToCart",
             "changeInstance",
             "formatNum",
-            "update"
+            "update",
+            "destroy"
         ]);
     };
     Home.prototype.mounted = function () {

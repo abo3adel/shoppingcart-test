@@ -20,3 +20,4 @@ Auth::routes();
 Route::get('/cart', 'CartController@index');
 Route::post('/cart/{product}', 'CartController@store');
 Route::patch('/cart/{id}', 'CartController@update');
+Route::delete('/cart/{id}', 'CartController@destroy');

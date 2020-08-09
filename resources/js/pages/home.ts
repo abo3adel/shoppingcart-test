@@ -5,9 +5,9 @@ import Super from "./super";
 import CartItemInterface from "../interfaces/cart-item";
 
 export interface HomeData {
-    cart: CartItemInterface[];
-    wish: CartItemInterface[];
-    cmp: CartItemInterface[];
+    default: CartItemInterface[];
+    wishlist: CartItemInterface[];
+    compare: CartItemInterface[];
     activeInstance: string;
     activeList: CartItemInterface[];
 }
@@ -16,9 +16,9 @@ export interface HomeData {
 export default class Home extends Super {
     public d: HomeData = {
         // all your compnent data will be present in here
-        cart: [],
-        wish: [],
-        cmp: [],
+        default: [],
+        wishlist: [],
+        compare: [],
         activeInstance: "default",
         activeList: []
     };
@@ -43,11 +43,11 @@ export default class Home extends Super {
             }
 
             if (instance === "wishlist") {
-                this.d.wish.push(res.data);
+                this.d.wishlist.push(res.data);
             } else if (instance === "compare") {
-                this.d.cmp.push(res.data);
+                this.d.compare.push(res.data);
             } else {
-                this.d.cart.push(res.data);
+                this.d.default.push(res.data);
             }
             this.successMes();
             loader.add("d-none");
@@ -64,10 +64,9 @@ export default class Home extends Super {
             }
 
             // alter item
-            this.d.cart.map(x => {
+            this.d.default.map(x => {
                 if (x.id === id) {
-                    x.qty =
-                        type === "sub" ? x.qty - 1 : x.qty + 1;
+                    x.qty = type === "sub" ? x.qty - 1 : x.qty + 1;
                 }
                 return x;
             });
@@ -77,25 +76,46 @@ export default class Home extends Super {
         });
     }
 
+    public destroy(id: number, instance: string): void {
+        const loader = this.showLoader("del" + id);
+
+        Axios.delete(`cart/${id}`, { data: { instance } }).then(res => {
+            if (!res || res.status !== 204) {
+                this.errorMes();
+                loader.add("d-none");
+                return;
+            }
+
+            this.addClass(`#${instance}${id}`, "d-none");
+            this.d[instance] = this.d[instance].filter(
+                (x: CartItemInterface) => {
+                    return x.id !== id;
+                }
+            );
+            this.successMes();
+            loader.add("d-none");
+        });
+    }
+
     public loadAllCartItems(): void {
         // TODO show loader for all items
         Axios.get("/cart").then(res => {
-            this.d.cart = res.data.all;
-            this.d.wish = res.data.wish;
-            this.d.cmp = res.data.cmp;
-            this.d.activeList = res.data.all;
+            this.d.default = res.data.all;
+            this.d.wishlist = res.data.wish;
+            this.d.compare = res.data.cmp;
+            this.d.activeList = [...res.data.all];
         });
     }
 
     public changeInstance(instance: string): void {
         this.d.activeInstance = instance;
 
-        if (instance === "wish") {
-            this.d.activeList = this.d.wish;
-        } else if (instance === "cmp") {
-            this.d.activeList = this.d.cmp;
+        if (instance === "wishlist") {
+            this.d.activeList = this.d.wishlist;
+        } else if (instance === "compare") {
+            this.d.activeList = this.d.compare;
         } else {
-            this.d.activeList = this.d.cart;
+            this.d.activeList = this.d.default;
         }
     }
 
@@ -104,7 +124,8 @@ export default class Home extends Super {
             "addToCart",
             "changeInstance",
             "formatNum",
-            "update"
+            "update",
+            "destroy"
         ]);
     }
 

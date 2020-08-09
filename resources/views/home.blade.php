@@ -10,15 +10,15 @@
                         v-on:click.prevent="h.d.changeInstance('default')" href="#">Default list</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" :class="{active: h.d.activeInstance === 'wish'}"
-                        v-on:click.prevent="h.d.changeInstance('wish')" href="#">Wish list</a>
+                    <a class="nav-link" :class="{active: h.d.activeInstance === 'wishlist'}"
+                        v-on:click.prevent="h.d.changeInstance('wishlist')" href="#">Wish list</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" :class="{active: h.d.activeInstance === 'cmp'}"
-                        v-on:click.prevent="h.d.changeInstance('cmp')" href="#">Compare list</a>
+                    <a class="nav-link" :class="{active: h.d.activeInstance === 'compare'}"
+                        v-on:click.prevent="h.d.changeInstance('compare')" href="#">Compare list</a>
                 </li>
             </ul>
-            <div class="row my-4" v-for="item in h.d.activeList" :key="item.id">
+            <div class="row my-4" v-for="item in h.d.activeList" :key="item.id" :id="item.instance + item.id">
                 <div class="media col-12">
                     <img src="/1.jpg" class="mr-3 img-thumbnail" alt="product-image" width="85">
                     <div class="media-body">
@@ -49,7 +49,8 @@
                                 </button>
                             </div>
                             <div class="col-6 text-right">
-                                <button class="btn btn-sm btn-danger">
+                                <button class="btn btn-sm btn-danger"
+                                    v-on:click.prevent="h.d.destroy(item.id, item.instance)">
                                     <x-btn-loader :vue="true" id="'del' + item.id"></x-btn-loader>
                                     &times; DELETE
                                 </button>

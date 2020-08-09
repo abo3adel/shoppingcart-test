@@ -99,6 +99,12 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        ['instance' => $instance] = request()->validate([
+            'instance' => 'required|alpha|min:7|max:8',
+        ]);
+
+        Cart::instance($instance)->delete($id);
+
+        return response()->noContent();
     }
 }
