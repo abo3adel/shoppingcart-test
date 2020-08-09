@@ -4,15 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ebddcc8940e7dffb26728b77bac31b59",
+    "content-hash": "836efda0d52fab38daa8f752884e8320",
     "packages": [
         {
             "name": "abo3adel/shoppingcart",
-            "version": "dev-master",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/abo3adel/shoppingcart.git",
+                "reference": "412e79f4fce89c59a6f5fb6163c3526e9c362854"
+            },
             "dist": {
-                "type": "path",
-                "url": "../shoppingcart",
-                "reference": "a376b88ae66e9ac24a26b6da9399d805055ba282"
+                "type": "zip",
+                "url": "https://api.github.com/repos/abo3adel/shoppingcart/zipball/412e79f4fce89c59a6f5fb6163c3526e9c362854",
+                "reference": "412e79f4fce89c59a6f5fb6163c3526e9c362854",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0|~5.8.0|^6.0|^7.0",
+                "php": "^7.1"
             },
             "require-dev": {
                 "fzaninotto/faker": "^1.9@dev",
@@ -41,19 +51,7 @@
                     "Abo3adel\\ShoppingCart\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Abo3adel\\ShoppingCart\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -64,9 +62,19 @@
                 }
             ],
             "description": "a simple yet powerful and highly customized laravel shopping cart",
-            "transport-options": {
-                "relative": true
-            }
+            "keywords": [
+                "abo3adel",
+                "cart",
+                "ecommerace",
+                "laravel",
+                "laravel-cart",
+                "laravel-ecommerace",
+                "laravel-shopping-cart",
+                "laravel-shoppingcart",
+                "multi-instance",
+                "shopping-cart"
+            ],
+            "time": "2020-08-09T00:49:03+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -7748,9 +7756,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "abo3adel/shoppingcart": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
