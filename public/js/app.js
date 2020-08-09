@@ -16534,6 +16534,9 @@ var Home = /** @class */ (function (_super) {
         };
         return _this;
     }
+    Home.prototype.formatNum = function (num) {
+        return new Intl.NumberFormat('en-EG').format(num);
+    };
     Home.prototype.addToCart = function (id, instance) {
         var _this = this;
         var loader = document.querySelector("#spinner" + id + instance);
@@ -16586,7 +16589,7 @@ var Home = /** @class */ (function (_super) {
         }
     };
     Home.prototype.beforeMount = function () {
-        this.attachToGlobal(this, ["addToCart", "changeInstance"]);
+        this.attachToGlobal(this, ["addToCart", "changeInstance", "formatNum"]);
     };
     Home.prototype.mounted = function () {
         this.loadAllCartItems();

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use Abo3adel\ShoppingCart\CartItem;
+use Cart;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

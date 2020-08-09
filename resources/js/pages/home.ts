@@ -23,6 +23,10 @@ export default class Home extends Super {
         activeList: []
     };
 
+    public formatNum(num: number): string {
+        return new Intl.NumberFormat('en-EG').format(num);
+    }
+
     public addToCart(id: number, instance: string): void {
         const loader = document.querySelector(
             `#spinner${id}${instance}`
@@ -80,7 +84,7 @@ export default class Home extends Super {
     }
 
     beforeMount() {
-        this.attachToGlobal(this, ["addToCart", "changeInstance"]);
+        this.attachToGlobal(this, ["addToCart", "changeInstance", "formatNum"]);
     }
 
     mounted() {

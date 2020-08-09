@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "836efda0d52fab38daa8f752884e8320",
+    "content-hash": "0c762bbd321c1d5cf97d3aeb390758b8",
     "packages": [
         {
             "name": "abo3adel/shoppingcart",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abo3adel/shoppingcart.git",
-                "reference": "412e79f4fce89c59a6f5fb6163c3526e9c362854"
+                "reference": "0f5ac791d0dbc73781b973b4089ae36d8157cba3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abo3adel/shoppingcart/zipball/412e79f4fce89c59a6f5fb6163c3526e9c362854",
-                "reference": "412e79f4fce89c59a6f5fb6163c3526e9c362854",
+                "url": "https://api.github.com/repos/abo3adel/shoppingcart/zipball/0f5ac791d0dbc73781b973b4089ae36d8157cba3",
+                "reference": "0f5ac791d0dbc73781b973b4089ae36d8157cba3",
                 "shasum": ""
             },
             "require": {
@@ -74,7 +74,7 @@
                 "multi-instance",
                 "shopping-cart"
             ],
-            "time": "2020-08-09T00:49:03+00:00"
+            "time": "2020-08-09T07:27:20+00:00"
         },
         {
             "name": "asm89/stack-cors",

@@ -18,13 +18,41 @@
                         v-on:click.prevent="h.d.changeInstance('cmp')" href="#">Compare list</a>
                 </li>
             </ul>
+            <div class="row my-4" v-for="item in h.d.activeList" :key="item.id">
+                <div class="media col-12">
+                    <img src="/1.jpg" class="mr-3 img-thumbnail" alt="product-image" width="85">
+                    <div class="media-body">
+                        <h5 class="mt-0">
+                            @{{ item.buyable.title }}
+                        </h5>
+                        <p class="row">
+                            <strong class="text-primary col-6 text-left">
+                                $@{{ h.d.formatNum(item.sub_total) }}
+                            </strong>
+                            <strong class="col-6 text-right text-danger">
+                                QTY: @{{ item.qty }}
+                            </strong>
+                        </p>
+                        <div class="row">
+                            <div class="col-6">
+                                <button class="btn btn-success btn-sm">
+                                    &plus;
+                                </button>
+                                <button class="btn btn-warning btn-sm">
+                                    &minus;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-12 col-md-9">
+        <div class="col-12 col-md-9 mt-3">
             <div class="row">
                 @foreach($products as $p)
                     <div class="col-sm-6 mb-3">
                         <div class="card">
-                            <img src="{{ asset('1.jpg') }}" class="card-img-top" height="220"
+                            <img src="{{ asset('1.jpg') }}" class="card-img-top" height="200"
                                 alt="image">
                             <div class="card-body">
                                 <h5 class="card-title">
@@ -32,12 +60,12 @@
                                 </h5>
                                 <p class="card-text">
                                     <strong class="text-primary">
-                                        ${{ $p->getSubPrice() }}
+                                        ${{ \number_format($p->getSubPrice(), 2) }}
                                     </strong>
                                     <br />
                                     <strong class="text-muted">
                                         <del>
-                                            ${{ $p->price }}
+                                            ${{ \number_format($p->price, 2) }}
                                         </del>
                                     </strong>
                                 </p>
