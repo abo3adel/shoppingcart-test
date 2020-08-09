@@ -16535,40 +16535,58 @@ var Home = /** @class */ (function (_super) {
         return _this;
     }
     Home.prototype.formatNum = function (num) {
-        return new Intl.NumberFormat('en-EG').format(num);
+        return new Intl.NumberFormat("en-EG").format(num);
     };
     Home.prototype.addToCart = function (id, instance) {
         var _this = this;
-        var loader = document.querySelector("#spinner" + id + instance);
-        loader.classList.remove("d-none");
+        var loader = this.showLoader("" + id + instance);
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/cart/" + id, { instance: instance }).then(function (res) {
             if (!res) {
-                loader.classList.add("d-none");
-                _this.$notify({
-                    title: "Error",
-                    text: "an unknown error had occured",
-                    type: "error"
-                });
+                loader.add("d-none");
+                _this.errorMes();
                 return;
             }
             if (res.status === 204) {
-                loader.classList.add("d-none");
-                _this.$notify({
-                    title: "Error",
-                    text: "This product is already exists in cart",
-                    type: "error"
-                });
+                loader.add("d-none");
+                _this.errorMes("This product is already exists in cart");
                 return;
             }
-            _this.$notify({
-                title: "Done",
-                type: "success"
+            if (instance === "wishlist") {
+                _this.d.wish.push(res.data);
+            }
+            else if (instance === "compare") {
+                _this.d.cmp.push(res.data);
+            }
+            else {
+                _this.d.cart.push(res.data);
+            }
+            _this.successMes();
+            loader.add("d-none");
+        });
+    };
+    Home.prototype.update = function (id, type, instance) {
+        var _this = this;
+        var loader = this.showLoader(type + id);
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch("cart/" + id, { type: type, instance: instance }).then(function (res) {
+            if (!res || res.status !== 204) {
+                _this.errorMes();
+                return;
+            }
+            // alter item
+            _this.d.cart.map(function (x) {
+                if (x.id === id) {
+                    x.qty =
+                        type === "sub" ? x.qty - 1 : x.qty + 1;
+                }
+                return x;
             });
-            loader.classList.add("d-none");
+            _this.successMes();
+            loader.add("d-none");
         });
     };
     Home.prototype.loadAllCartItems = function () {
         var _this = this;
+        // TODO show loader for all items
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/cart").then(function (res) {
             _this.d.cart = res.data.all;
             _this.d.wish = res.data.wish;
@@ -16589,7 +16607,12 @@ var Home = /** @class */ (function (_super) {
         }
     };
     Home.prototype.beforeMount = function () {
-        this.attachToGlobal(this, ["addToCart", "changeInstance", "formatNum"]);
+        this.attachToGlobal(this, [
+            "addToCart",
+            "changeInstance",
+            "formatNum",
+            "update"
+        ]);
     };
     Home.prototype.mounted = function () {
         this.loadAllCartItems();
@@ -16664,6 +16687,27 @@ var Super = /** @class */ (function (_super) {
         if (!el)
             return;
         el.classList.remove(cls);
+    };
+    Super.prototype.errorMes = function (mess) {
+        if (mess === void 0) { mess = "an unknown error had occured"; }
+        this.$notify({
+            title: "Error",
+            text: mess,
+            type: "error"
+        });
+    };
+    Super.prototype.successMes = function (mess) {
+        if (mess === void 0) { mess = ""; }
+        this.$notify({
+            title: "Done",
+            text: mess,
+            type: "success"
+        });
+    };
+    Super.prototype.showLoader = function (id) {
+        var loader = document.querySelector("#spinner" + id).classList;
+        loader.remove("d-none");
+        return loader;
     };
     Super.prototype.beforeMount = function () { };
     Super = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([

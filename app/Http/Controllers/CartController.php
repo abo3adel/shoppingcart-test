@@ -17,9 +17,9 @@ class CartController extends Controller
     public function index()
     {
         return response()->json([
-            'all' => Cart::instance()->content(),
-            'wish' => Cart::instance('wishlist')->content(),
-            'cmp' => Cart::instance('compare')->content(),
+            'all' => Cart::instance()->content()->values(),
+            'wish' => Cart::instance('wishlist')->content()->values(),
+            'cmp' => Cart::instance('compare')->content()->values(),
         ]);
     }
 
@@ -31,6 +31,9 @@ class CartController extends Controller
      */
     public function store(Request $request, Product $product)
     {
+        ['instance' => $instance] = request()->validate([
+            'instance' => 'required|alpha|min:7|max:8',
+        ]);
         try {
             return response()->json(
                 Cart::instance(
@@ -63,7 +66,29 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        [
+            'type' => $type,
+            'instance' => $instance
+        ] = request()->validate([
+            'type' => 'required|alpha|min:3|max:3',
+            'instance' => 'required|alpha|min:7|max:8',
+        ]);
+
+        $item = Cart::instance(
+            $instance
+        )->find($id);
+
+        if ($type === 'add') {
+            return response()->json(
+                [],
+                $item->increments() ? 204 : 200
+            );
+        }
+
+        return  response()->json(
+            [],
+            $item->decrements() ? 204 : 200
+        );
     }
 
     /**

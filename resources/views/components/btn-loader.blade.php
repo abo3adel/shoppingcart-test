@@ -1,3 +1,4 @@
-@props(['id'])
+@props(['id', 'vue'])
 
-    <span id="spinner{{ $id }}" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+    <span @isset($vue) :id="'spinner' + {{ $id }}" @else id="spinner{{ $id }}" @endisset
+        class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>

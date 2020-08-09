@@ -40,5 +40,30 @@ export default class Super extends Vue {
         el.classList.remove(cls);
     }
 
+    protected errorMes(mess: string = "an unknown error had occured") {
+        this.$notify({
+            title: "Error",
+            text: mess,
+            type: "error"
+        });
+    }
+
+    protected successMes(mess = "") {
+        this.$notify({
+            title: "Done",
+            text: mess,
+            type: "success"
+        });
+    }
+
+    protected showLoader(id: string): DOMTokenList
+    {
+        const loader = (document.querySelector(
+            `#spinner${id}`
+        ) as HTMLElement).classList;
+        loader.remove("d-none");
+        return loader;
+    }
+
     beforeMount() {}
 }

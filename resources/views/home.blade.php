@@ -29,17 +29,29 @@
                             <strong class="text-primary col-6 text-left">
                                 $@{{ h.d.formatNum(item.sub_total) }}
                             </strong>
-                            <strong class="col-6 text-right text-danger">
+                            <strong class="col-6 text-right text-secondary" v-show="h.d.activeInstance === 'default'">
                                 QTY: @{{ item.qty }}
                             </strong>
                         </p>
                         <div class="row">
-                            <div class="col-6">
-                                <button class="btn btn-success btn-sm">
+                            <div class="col-6 text-left">
+                                <button class="btn btn-success btn-sm" v-show="h.d.activeInstance === 'default'"
+                                    v-on:click.prevent="h.d.update(item.id, 'add', item.instance)"
+                                    :disabled="item.qty >= item.buyable.qty">
+                                    <x-btn-loader :vue="true" id="'add' + item.id"></x-btn-loader>
                                     &plus;
                                 </button>
-                                <button class="btn btn-warning btn-sm">
+                                <button class="btn btn-warning btn-sm" v-show="h.d.activeInstance === 'default'"
+                                    v-on:click.prevent="h.d.update(item.id, 'sub', item.instance)"
+                                    :disabled="item.qty <= 1">
+                                    <x-btn-loader :vue="true" id="'sub' + item.id"></x-btn-loader>
                                     &minus;
+                                </button>
+                            </div>
+                            <div class="col-6 text-right">
+                                <button class="btn btn-sm btn-danger">
+                                    <x-btn-loader :vue="true" id="'del' + item.id"></x-btn-loader>
+                                    &times; DELETE
                                 </button>
                             </div>
                         </div>

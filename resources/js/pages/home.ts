@@ -24,49 +24,65 @@ export default class Home extends Super {
     };
 
     public formatNum(num: number): string {
-        return new Intl.NumberFormat('en-EG').format(num);
+        return new Intl.NumberFormat("en-EG").format(num);
     }
 
     public addToCart(id: number, instance: string): void {
-        const loader = document.querySelector(
-            `#spinner${id}${instance}`
-        ) as HTMLElement;
-        loader.classList.remove("d-none");
+        const loader = this.showLoader(`${id}${instance}`);
 
         Axios.post(`/cart/${id}`, { instance }).then(res => {
             if (!res) {
-                loader.classList.add("d-none");
-                this.$notify({
-                    title: "Error",
-                    text: "an unknown error had occured",
-                    type: "error"
-                });
+                loader.add("d-none");
+                this.errorMes();
                 return;
             }
             if (res.status === 204) {
-                loader.classList.add("d-none");
-                this.$notify({
-                    title: "Error",
-                    text: "This product is already exists in cart",
-                    type: "error"
-                });
+                loader.add("d-none");
+                this.errorMes("This product is already exists in cart");
                 return;
             }
 
-            this.$notify({
-                title: "Done",
-                type: "success"
+            if (instance === "wishlist") {
+                this.d.wish.push(res.data);
+            } else if (instance === "compare") {
+                this.d.cmp.push(res.data);
+            } else {
+                this.d.cart.push(res.data);
+            }
+            this.successMes();
+            loader.add("d-none");
+        });
+    }
+
+    public update(id: number, type: string, instance: string): void {
+        const loader = this.showLoader(type + id);
+
+        Axios.patch(`cart/${id}`, { type, instance }).then(res => {
+            if (!res || res.status !== 204) {
+                this.errorMes();
+                return;
+            }
+
+            // alter item
+            this.d.cart.map(x => {
+                if (x.id === id) {
+                    x.qty =
+                        type === "sub" ? x.qty - 1 : x.qty + 1;
+                }
+                return x;
             });
-            loader.classList.add("d-none");
+
+            this.successMes();
+            loader.add("d-none");
         });
     }
 
     public loadAllCartItems(): void {
+        // TODO show loader for all items
         Axios.get("/cart").then(res => {
             this.d.cart = res.data.all;
             this.d.wish = res.data.wish;
             this.d.cmp = res.data.cmp;
-
             this.d.activeList = res.data.all;
         });
     }
@@ -84,7 +100,12 @@ export default class Home extends Super {
     }
 
     beforeMount() {
-        this.attachToGlobal(this, ["addToCart", "changeInstance", "formatNum"]);
+        this.attachToGlobal(this, [
+            "addToCart",
+            "changeInstance",
+            "formatNum",
+            "update"
+        ]);
     }
 
     mounted() {
