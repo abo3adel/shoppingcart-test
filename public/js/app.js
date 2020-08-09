@@ -16605,12 +16605,12 @@ var Home = /** @class */ (function (_super) {
     };
     Home.prototype.loadAllCartItems = function () {
         var _this = this;
-        // TODO show loader for all items
         axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/cart").then(function (res) {
             _this.d.default = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(res.data.all);
             _this.d.wishlist = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(res.data.wish);
             _this.d.compare = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(res.data.cmp);
             _this.d.activeList = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(res.data.all);
+            _this.d.loading = false;
         });
     };
     Home.prototype.changeInstance = function (instance) {
@@ -16636,7 +16636,6 @@ var Home = /** @class */ (function (_super) {
     };
     Home.prototype.mounted = function () {
         this.loadAllCartItems();
-        this.d.loading = false;
     };
     Home = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         vue_property_decorator__WEBPACK_IMPORTED_MODULE_2__["Component"]

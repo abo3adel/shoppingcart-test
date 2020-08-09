@@ -19,6 +19,9 @@
         </div>
     </div>
 </div>
+<div class="alert alert-danger text-bold mt-4" v-show="!h.d.loading && !h.d.activeList.length">
+    <strong>Empty </strong> Add new Item
+</div>
 <div class="row my-4" v-for="item in h.d.activeList" :key="item.id" :id="item.instance + item.id">
     <div class="media col-12">
         <img src="/1.jpg" class="mr-3 img-thumbnail" alt="product-image" width="85">

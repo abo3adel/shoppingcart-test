@@ -105,12 +105,12 @@ export default class Home extends Super {
     }
 
     public loadAllCartItems(): void {
-        // TODO show loader for all items
         Axios.get("/cart").then(res => {
             this.d.default = [...res.data.all];
             this.d.wishlist = [...res.data.wish];
             this.d.compare = [...res.data.cmp];
             this.d.activeList = [...res.data.all];
+            this.d.loading = false;
         });
     }
 
@@ -138,6 +138,5 @@ export default class Home extends Super {
 
     mounted() {
         this.loadAllCartItems();
-        this.d.loading = false;
     }
 }
