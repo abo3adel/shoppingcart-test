@@ -16530,7 +16530,8 @@ var Home = /** @class */ (function (_super) {
             wishlist: [],
             compare: [],
             activeInstance: "default",
-            activeList: []
+            activeList: [],
+            loading: true
         };
         return _this;
     }
@@ -16635,6 +16636,7 @@ var Home = /** @class */ (function (_super) {
     };
     Home.prototype.mounted = function () {
         this.loadAllCartItems();
+        this.d.loading = false;
     };
     Home = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         vue_property_decorator__WEBPACK_IMPORTED_MODULE_2__["Component"]

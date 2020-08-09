@@ -12,6 +12,13 @@
             v-on:click.prevent="h.d.changeInstance('compare')" href="#">Compare list</a>
     </li>
 </ul>
+<div class="text-center mt-4" v-show="h.d.loading">
+    <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+        <div class="spinner-grow text-danger" style="width: 2rem; height: 2rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
 <div class="row my-4" v-for="item in h.d.activeList" :key="item.id" :id="item.instance + item.id">
     <div class="media col-12">
         <img src="/1.jpg" class="mr-3 img-thumbnail" alt="product-image" width="85">

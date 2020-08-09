@@ -10,6 +10,7 @@ export interface HomeData {
     compare: CartItemInterface[];
     activeInstance: string;
     activeList: CartItemInterface[];
+    loading: boolean;
 }
 
 @Component
@@ -20,7 +21,8 @@ export default class Home extends Super {
         wishlist: [],
         compare: [],
         activeInstance: "default",
-        activeList: []
+        activeList: [],
+        loading: true
     };
 
     public formatNum(num: number): string {
@@ -136,5 +138,6 @@ export default class Home extends Super {
 
     mounted() {
         this.loadAllCartItems();
+        this.d.loading = false;
     }
 }
