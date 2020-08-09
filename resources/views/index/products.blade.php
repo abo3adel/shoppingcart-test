@@ -2,7 +2,7 @@
     @foreach($products as $p)
         <div class="col-6 col-sm-4 mb-3 p-1">
             <div class="card p-0 m-0">
-                <img src="{{ asset('1.jpg') }}" class="card-img-top" height="150" alt="image">
+                <img src="{{ asset('1.jpg') }}" class="card-img-top" height="160" alt="image">
                 <div class="card-body">
                     <h5 class="card-title">
                         {{ $p->title }}

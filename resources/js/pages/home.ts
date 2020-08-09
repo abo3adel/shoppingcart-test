@@ -29,7 +29,6 @@ export default class Home extends Super {
 
     public addToCart(id: number, instance: string): void {
         const loader = this.showLoader(`${id}${instance}`);
-
         Axios.post(`/cart/${id}`, { instance }).then(res => {
             if (!res) {
                 loader.add("d-none");
@@ -42,13 +41,19 @@ export default class Home extends Super {
                 return;
             }
 
-            if (instance === "wishlist") {
-                this.d.wishlist.push(res.data);
-            } else if (instance === "compare") {
-                this.d.compare.push(res.data);
-            } else {
-                this.d.default.push(res.data);
+            // if (instance === "wishlist") {
+            //     this.d.wishlist.push(res.data);
+            // } else if (instance === "compare") {
+            //     this.d.compare.push(res.data);
+            // } else {
+            //     this.d.default.push(res.data);
+            // }
+            this.d[instance].push(res.data);
+
+            if (this.d.activeInstance === instance) {
+                this.d.activeList.push(res.data);
             }
+
             this.successMes();
             loader.add("d-none");
         });
@@ -100,9 +105,9 @@ export default class Home extends Super {
     public loadAllCartItems(): void {
         // TODO show loader for all items
         Axios.get("/cart").then(res => {
-            this.d.default = res.data.all;
-            this.d.wishlist = res.data.wish;
-            this.d.compare = res.data.cmp;
+            this.d.default = [...res.data.all];
+            this.d.wishlist = [...res.data.wish];
+            this.d.compare = [...res.data.cmp];
             this.d.activeList = [...res.data.all];
         });
     }
@@ -111,11 +116,11 @@ export default class Home extends Super {
         this.d.activeInstance = instance;
 
         if (instance === "wishlist") {
-            this.d.activeList = this.d.wishlist;
+            this.d.activeList = [...this.d.wishlist];
         } else if (instance === "compare") {
-            this.d.activeList = this.d.compare;
+            this.d.activeList = [...this.d.compare];
         } else {
-            this.d.activeList = this.d.default;
+            this.d.activeList = [...this.d.default];
         }
     }
 
