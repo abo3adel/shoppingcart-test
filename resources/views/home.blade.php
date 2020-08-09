@@ -31,16 +31,19 @@
                             </div>
                             <div class="card-footer text-center">
                                 <div class="btn-group" role="group" aria-label="Basic lite">
-                                    <button type="button" class="btn btn-success" title="add to wishlist" v-on:click.prevent="h.d.log('www')">
-                                        <x-btn-loader id="$p->id"></x-btn-loader>
+                                    <button type="button" class="btn btn-success" title="add to wishlist"
+                                        v-on:click.prevent="h.d.addToCart({{ $p->id }}, 'wishlist')">
+                                        <x-btn-loader id="{{ $p->id }}wishlist"></x-btn-loader>
                                         <span class="wish">&hearts;</span>
                                     </button>
-                                    <button type="button" class="btn btn-primary" title="add to cart">
-                                        <x-btn-loader id="$p->id"></x-btn-loader>
+                                    <button type="button" class="btn btn-primary" title="add to cart"
+                                        v-on:click.prevent="h.d.addToCart({{ $p->id }}, 'default')">
+                                        <x-btn-loader id="{{ $p->id }}default"></x-btn-loader>
                                         &plus; Cart
                                     </button>
-                                    <button type="button" class="btn btn-info" title="add to compare">
-                                        <x-btn-loader id="$p->id"></x-btn-loader>
+                                    <button type="button" class="btn btn-info" title="add to compare"
+                                        v-on:click.prevent="h.d.addToCart({{ $p->id }}, 'compare')">
+                                        <x-btn-loader id="{{ $p->id }}compare"></x-btn-loader>
                                         &sum;
                                     </button>
                                 </div>

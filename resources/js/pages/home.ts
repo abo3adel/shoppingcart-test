@@ -1,3 +1,4 @@
+import { Vue } from "vue-property-decorator";
 import Axios from "axios";
 import { Component, Prop } from "vue-property-decorator";
 import Super from "./super";
@@ -18,9 +19,39 @@ export default class Home extends Super {
         cmp: []
     };
 
-    // public addToCart(instance: string): void {
-    //     Axios.post('/')
-    // }
+    public addToCart(id: number, instance: string): void {
+        const loader = document.querySelector(
+            `#spinner${id}${instance}`
+        ) as HTMLElement;
+        loader.classList.remove("d-none");
+
+        Axios.post(`/cart/${id}`, { instance }).then(res => {
+            if (!res) {
+                loader.classList.add("d-none");
+                this.$notify({
+                    title: "Error",
+                    text: "an unknown error had occured",
+                    type: "error"
+                });
+                return;
+            }
+            if (res.status === 204) {
+                loader.classList.add("d-none");
+                this.$notify({
+                    title: "Error",
+                    text: "This product is already exists in cart",
+                    type: "error"
+                });
+                return;
+            }
+
+            this.$notify({
+                title: "Done",
+                type: "success"
+            });
+            loader.classList.add("d-none");
+        });
+    }
 
     public loadAllCartItems(): void {
         Axios.get("/cart").then(res => {
@@ -31,7 +62,7 @@ export default class Home extends Super {
     }
 
     beforeMount() {
-        this.attachToGlobal(this, []);
+        this.attachToGlobal(this, ["addToCart"]);
     }
 
     mounted() {

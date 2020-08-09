@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Abo3adel\ShoppingCart\Exceptions\ItemAlreadyExistsException;
+use App\Product;
 use Cart;
 use Illuminate\Http\Request;
 
@@ -27,9 +29,18 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
-        //
+        try {
+            return response()->json(
+                Cart::instance(
+                    $request->get('instance')
+                )->add($product, 1, 0, 0),
+                201
+            );
+        } catch (ItemAlreadyExistsException $e) {
+            return response()->noContent();
+        }
     }
 
     /**

@@ -1,4 +1,5 @@
 import { Vue } from 'vue-property-decorator';
+import Notifications from 'vue-notification'
 import Axios from 'axios';
 import Home from './pages/home';
 
@@ -15,6 +16,8 @@ Axios.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+
+Vue.use(Notifications)
 
 Vue.config.productionTip = false;
 

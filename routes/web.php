@@ -18,3 +18,4 @@ Route::get('/', 'HomeController@index');
 Auth::routes();
 
 Route::get('/cart', 'CartController@index');
+Route::post('/cart/{product}', 'CartController@store');
