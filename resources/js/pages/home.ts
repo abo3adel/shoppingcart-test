@@ -8,6 +8,8 @@ export interface HomeData {
     cart: CartItemInterface[];
     wish: CartItemInterface[];
     cmp: CartItemInterface[];
+    activeInstance: string;
+    activeList: CartItemInterface[];
 }
 
 @Component
@@ -16,7 +18,9 @@ export default class Home extends Super {
         // all your compnent data will be present in here
         cart: [],
         wish: [],
-        cmp: []
+        cmp: [],
+        activeInstance: "default",
+        activeList: []
     };
 
     public addToCart(id: number, instance: string): void {
@@ -58,11 +62,25 @@ export default class Home extends Super {
             this.d.cart = res.data.all;
             this.d.wish = res.data.wish;
             this.d.cmp = res.data.cmp;
+
+            this.d.activeList = res.data.all;
         });
     }
 
+    public changeInstance(instance: string): void {
+        this.d.activeInstance = instance;
+
+        if (instance === "wish") {
+            this.d.activeList = this.d.wish;
+        } else if (instance === "cmp") {
+            this.d.activeList = this.d.cmp;
+        } else {
+            this.d.activeList = this.d.cart;
+        }
+    }
+
     beforeMount() {
-        this.attachToGlobal(this, ["addToCart"]);
+        this.attachToGlobal(this, ["addToCart", "changeInstance"]);
     }
 
     mounted() {

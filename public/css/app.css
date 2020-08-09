@@ -10908,3 +10908,8 @@ span.wish {
   font-size: x-large;
 }
 
+.nav-item .nav-link {
+  font-variant: small-caps;
+  text-transform: capitalize;
+}
+

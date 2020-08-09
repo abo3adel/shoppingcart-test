@@ -16528,7 +16528,9 @@ var Home = /** @class */ (function (_super) {
             // all your compnent data will be present in here
             cart: [],
             wish: [],
-            cmp: []
+            cmp: [],
+            activeInstance: "default",
+            activeList: []
         };
         return _this;
     }
@@ -16568,10 +16570,23 @@ var Home = /** @class */ (function (_super) {
             _this.d.cart = res.data.all;
             _this.d.wish = res.data.wish;
             _this.d.cmp = res.data.cmp;
+            _this.d.activeList = res.data.all;
         });
     };
+    Home.prototype.changeInstance = function (instance) {
+        this.d.activeInstance = instance;
+        if (instance === "wish") {
+            this.d.activeList = this.d.wish;
+        }
+        else if (instance === "cmp") {
+            this.d.activeList = this.d.cmp;
+        }
+        else {
+            this.d.activeList = this.d.cart;
+        }
+    };
     Home.prototype.beforeMount = function () {
-        this.attachToGlobal(this, ["addToCart"]);
+        this.attachToGlobal(this, ["addToCart", "changeInstance"]);
     };
     Home.prototype.mounted = function () {
         this.loadAllCartItems();

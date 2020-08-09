@@ -4,7 +4,20 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 col-md-3">
-
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                    <a class="nav-link" :class="{active: h.d.activeInstance === 'default'}"
+                        v-on:click.prevent="h.d.changeInstance('default')" href="#">Default list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" :class="{active: h.d.activeInstance === 'wish'}"
+                        v-on:click.prevent="h.d.changeInstance('wish')" href="#">Wish list</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" :class="{active: h.d.activeInstance === 'cmp'}"
+                        v-on:click.prevent="h.d.changeInstance('cmp')" href="#">Compare list</a>
+                </li>
+            </ul>
         </div>
         <div class="col-12 col-md-9">
             <div class="row">
