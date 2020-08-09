@@ -85,6 +85,20 @@
                 <main class="py-4">
                     @yield('content')
                 </main>
+                <footer class="footer mt-5 py-3 bg-danger text-light">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Code available at GitHub <a href="https://github.com/abo3adel/shoppingcart"
+                                    target="_blank">Package</a> and <a href="https://github.com/abo3adel/shoppingcart"
+                                    target="_blank">this WebSite</a>
+                            </div>
+                            <div class="col-sm-6 mt-3 text-right">
+                                Made with &hearts; by <a href="http://ninjacoder.rf.gd/" target="_blank">NinjaCoder</a> &copy; 2020
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </template>
         </{{ $cpt ?? 'home' }}>
     </div>
