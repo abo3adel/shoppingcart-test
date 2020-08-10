@@ -16,7 +16,8 @@
         "laravel/framework": "^7.24",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "protoqol/prequel": "^1.22"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",
