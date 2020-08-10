@@ -19,5 +19,5 @@ Auth::routes();
 
 Route::get('/cart', 'CartController@index');
 Route::post('/cart/{product}', 'CartController@store');
-Route::patch('/cart/{id}', 'CartController@update');
-Route::delete('/cart/{id}', 'CartController@destroy');
+Route::post('/cart/{id}/patch', 'CartController@update');
+Route::post('/cart/{id}/delete', 'CartController@destroy');

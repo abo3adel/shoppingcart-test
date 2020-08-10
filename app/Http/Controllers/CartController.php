@@ -99,9 +99,10 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        ['instance' => $instance] = request()->validate([
-            'instance' => 'required|alpha|min:7|max:8',
+        $instance = request()->validate([
+            'data.instance' => 'required|alpha|min:7|max:8',
         ]);
+        $instance = $instance['data']['instance'];
 
         Cart::instance($instance)->delete($id);
 

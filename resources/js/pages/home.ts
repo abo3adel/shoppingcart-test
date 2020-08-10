@@ -64,7 +64,7 @@ export default class Home extends Super {
     public update(id: number, type: string, instance: string): void {
         const loader = this.showLoader(type + id);
 
-        Axios.patch(`cart/${id}`, { type, instance }).then(res => {
+        Axios.post(`cart/${id}/patch`, { type, instance }).then(res => {
             if (!res || res.status !== 204) {
                 this.errorMes();
                 return;
@@ -86,7 +86,7 @@ export default class Home extends Super {
     public destroy(id: number, instance: string): void {
         const loader = this.showLoader("del" + id);
 
-        Axios.delete(`cart/${id}`, { data: { instance } }).then(res => {
+        Axios.post(`cart/${id}/delete`, { data: { instance } }).then(res => {
             if (!res || res.status !== 204) {
                 this.errorMes();
                 loader.add("d-none");
